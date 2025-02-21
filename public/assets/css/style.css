@@ -1,0 +1,40 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  min-width: 300px;
+  width: 100vw;
+  height: 100vh;
+}
+
+header {
+  height: 25vh;
+  width: 100%;
+  background: url("../images/Terre_730_getty.jpg") no-repeat center;
+  background-size: cover;
+}
+
+/* // Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  /* footer * {
+    color: red;
+  } */
+}
+
+/* // Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+}
+
+/* // Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+}
+
+/* // X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+
+/* // XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {
+}
