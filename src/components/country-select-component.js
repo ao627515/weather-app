@@ -1,16 +1,21 @@
-import { countrySelectService } from "../services/country-select-service.js";
+import { CountrySelectService } from "../services/country-select-service.js";
+import { SevenTimerApiService } from "../services/seven-timer-api-service.js";
 
 export class CountrySelectComponent {
   countrySelectElement = null;
   countrySelectService = null;
+  sevenTimerApiService = null;
   data = null;
+  citySelected = null;
 
   constructor() {
-    this.countrySelectElement = document.querySelector('#select-country select');
+    this.countrySelectService = CountrySelectService.getInstance();
+    this.countrySelectElement = this.countrySelectService.countrySelectElement;
     if (!this.countrySelectElement) {
       throw new Error('Country select element not found in DOM');
     }
-    this.countrySelectService = countrySelectService.getInstance();
+
+    this.sevenTimerApiService = SevenTimerApiService.getInstance();
   }
 
   async init() {
@@ -21,39 +26,55 @@ export class CountrySelectComponent {
       console.error("Failed to initialize country select:", error);
       // Consider implementing user-facing error handling here
     }
+
+    this.event();
+
+  }
+
+  event() {
+    this.selectItem();
   }
 
   fillSelect(data) {
-    const fragment = document.createDocumentFragment();
-
-    data.forEach((item, index) => {
-      const option = document.createElement('option');
-      option.value = index; // Consider using a unique ID if available
-      option.textContent = `${item.city} (${item.country})`;
-      fragment.appendChild(option);
-    });
-
-    this.resetSelect();
-    this.countrySelectElement.appendChild(fragment);
+    this.countrySelectService.fillSelect(data);
   }
 
   resetSelect() {
-    this.clearOptions();
-    this.countrySelectElement.selectedIndex = -1;
-    // Optional: Add a default placeholder option
-    this.addPlaceholderOption();
+    this.countrySelectService.resetSelect();
   }
 
   clearOptions() {
-    this.countrySelectElement.innerHTML = '';
+    this.countrySelectService.clearOptions();
   }
 
   // Optional helper method for adding a placeholder
   addPlaceholderOption(text = 'Select a country...') {
-    const placeholder = document.createElement('option');
-    placeholder.disabled = true;
-    placeholder.selected = true;
-    placeholder.textContent = text;
-    this.countrySelectElement.appendChild(placeholder);
+    this.countrySelectService.addPlaceholderOption(text);
+  }
+
+  selectItem() {
+    this.countrySelectElement.addEventListener('change', (e) => {  // Utilisation d'une fonction fléchée
+      console.log('Sélection modifiée !', e.target.value);
+      const index = e.target.value;
+
+      const item = this.countrySelectService.fetchCitySelected(+index);
+      console.log(item);
+
+      this.fetchWeatherData(item);
+    });
+
+  }
+
+  async fetchWeatherData(item) {
+    if (item) {
+      const response = await this.sevenTimerApiService.machineReadableApi(
+        item.longitude,
+        item.latitude,
+      )
+      console.log(response);
+    }
+
+    console.log('cest arriver ici');
+
   }
 }

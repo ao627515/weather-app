@@ -23,6 +23,8 @@ export class App {
     countrySelectComponent.init();
   }
 
-  init() { }
+  init() {
+    const citySelected = new CustomEvent('citySelected');
+  }
 
 }
