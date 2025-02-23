@@ -1,3 +1,5 @@
+import { CountrySelectComponent } from "./components/country-select-component.js";
+
 export class App {
 
   static #INSTANCE = null;
@@ -16,7 +18,10 @@ export class App {
     return App.#INSTANCE;
   }
 
-  run() { }
+  run() {
+    const countrySelectComponent = new CountrySelectComponent();
+    countrySelectComponent.init();
+  }
 
   init() { }
 
