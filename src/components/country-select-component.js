@@ -1,4 +1,5 @@
 import { CountrySelectService } from "../services/country-select-service.js";
+import { LoaderService } from "../services/loader-service.js";
 import { SevenTimerApiService } from "../services/seven-timer-api-service.js";
 
 export class CountrySelectComponent {
@@ -16,15 +17,19 @@ export class CountrySelectComponent {
     }
 
     this.sevenTimerApiService = SevenTimerApiService.getInstance();
+    this.loaderService = LoaderService.getInstance();
   }
 
   async init() {
     try {
+      this.loaderService.show();
       this.data = await this.countrySelectService.getData();
       this.fillSelect(this.data);
+      this.loaderService.dismiss();
     } catch (error) {
       console.error("Failed to initialize country select:", error);
       // Consider implementing user-facing error handling here
+      this.loaderService.dismiss();
     }
 
     this.event();

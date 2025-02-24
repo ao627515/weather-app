@@ -10,6 +10,7 @@
     <meta http-equiv="Expires" content="-1">
     <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/pre-loader.css">
 
     <title>MétéoVoyage - Prévisions météo pour voyageurs</title>
 
@@ -49,89 +50,12 @@
         </section>
 
         <section id="weather-list">
-            <!-- Carte météo 1 -->
-            <div class="weather">
-                <div class="wrapper">
-                    <div class="top">
-                        <h3 class="date">Ven 21 Fév</h3>
-                        <img src="./assets/images/ishower.png" alt="Pluie légère">
-                    </div>
-                    <div class="bottom">
-                        <p class="weather-description">
-                            PLUIE LÉGÈRE
-                        </p>
-                        <p class="weather-description">
-                            <span class="temp-high">Max: 10°C</span>
-                        </p>
-                        <p class="weather-description">
-                            <span class="temp-low">Min: 7°C</span>
-                        </p>
-                    </div>
-                </div>
+        </section>
+        <section id="loader-wrapper">
+            <div id="loader">
+                <img src="assets/images/weather-loader.gif" alt="" id="weather-loader">
             </div>
-
-            <!-- Carte météo 2 -->
-            <div class="weather">
-                <div class="wrapper">
-                    <div class="top">
-                        <h3 class="date">Sam 22 Fév</h3>
-                        <img src="./assets/images/lightrain.png" alt="Nuageux">
-                    </div>
-                    <div class="bottom">
-                        <p class="weather-description">
-                            NUAGEUX
-                        </p>
-                        <p class="weather-description">
-                            <span class="temp-high">Max: 12°C</span>
-                        </p>
-                        <p class="weather-description">
-                            <span class="temp-low">Min: 8°C</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Carte météo 3 -->
-            <div class="weather">
-                <div class="wrapper">
-                    <div class="top">
-                        <h3 class="date">Dim 23 Fév</h3>
-                        <img src="./assets/images/mcloudy.png" alt="Ensoleillé">
-                    </div>
-                    <div class="bottom">
-                        <p class="weather-description">
-                            ENSOLEILLÉ
-                        </p>
-                        <p class="weather-description">
-                            <span class="temp-high">Max: 15°C</span>
-                        </p>
-                        <p class="weather-description">
-                            <span class="temp-low">Min: 9°C</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Carte météo 4 -->
-            <div class="weather">
-                <div class="wrapper">
-                    <div class="top">
-                        <h3 class="date">Lun 24 Fév</h3>
-                        <img src="./assets/images/oshower.png" alt="Partiellement nuageux">
-                    </div>
-                    <div class="bottom">
-                        <p class="weather-description">
-                            PARTIELLEMENT NUAGEUX
-                        </p>
-                        <p class="weather-description">
-                            <span class="temp-high">Max: 14°C</span>
-                        </p>
-                        <p class="weather-description">
-                            <span class="temp-low">Min: 10°C</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+            <p>Chargement des données météorologiques...</p>
         </section>
     </main>
 
