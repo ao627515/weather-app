@@ -1,6 +1,7 @@
 import { CountrySelectService } from "../services/country-select-service.js";
 import { LoaderService } from "../services/loader-service.js";
 import { SevenTimerApiService } from "../services/seven-timer-api-service.js";
+import { WeatherListService } from "../services/weather-list-service.js";
 
 export class CountrySelectComponent {
   countrySelectElement = null;
@@ -18,6 +19,7 @@ export class CountrySelectComponent {
 
     this.sevenTimerApiService = SevenTimerApiService.getInstance();
     this.loaderService = LoaderService.getInstance();
+    this.weatherListeService = WeatherListService.getInstance();
   }
 
   async init() {
@@ -71,12 +73,16 @@ export class CountrySelectComponent {
   }
 
   async fetchWeatherData(item) {
+    this.loaderService.show();
     if (item) {
       const response = await this.sevenTimerApiService.machineReadableApi(
         item.longitude,
         item.latitude,
       )
-      console.log(response);
+      // console.log(response);
+      this.weatherListeService.fillList(response);
+      this.loaderService.dismiss();
+
     }
 
     console.log('cest arriver ici');
