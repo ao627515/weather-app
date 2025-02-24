@@ -1,3 +1,5 @@
+import { WeatherDataCivillight } from "../models/seven-timer/weather-data-civillight.js";
+
 /**
  * Service pour interagir avec l'API SevenTimer.
  */
@@ -28,26 +30,39 @@ export class SevenTimerApiService {
 
   /**
    * Récupère les données de l'API SevenTimer en fonction des coordonnées géographiques et des paramètres.
-   * @param {number} lon La longitude du lieu.
-   * @param {number} lat La latitude du lieu.
-   * @param {string} [product='civil'] Le produit de l'API, comme 'astro', 'civil', 'meteo', etc.
-   * @param {string} [output='json'] Le format de la réponse, soit 'json' soit 'xml'.
-   * @returns {Promise<Object|null>} Les données de l'API au format JSON ou null en cas d'erreur.
+   * @param {number} lon - La longitude du lieu.
+   * @param {number} lat - La latitude du lieu.
+   * @param {string} [product='civillight'] - Le produit de l'API, comme 'astro', 'civil', 'meteo', etc.
+   * @param {string} [output='json'] - Le format de la réponse, soit 'json' soit 'xml'.
+   * @returns {Promise<WeatherDataCivillight[] | null>} - Les données de l'API au format JSON ou null en cas d'erreur.
    */
-  machineReadableApi(lon, lat, product = 'civil', output = 'json') {
-    const url = `${this.#domaine}?lon=${lon}&lat=${lat}&product=${product}&output=${output}`;
-    return fetch(url)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Erreur HTTP : ${response.status}`);
-        }
-        return response.json();
-      })
-      .catch(error => {
-        console.error("Erreur de chargement :", error);
-        return null; // Retourne `null` en cas d'erreur
-      });
+  async machineReadableApi(lon, lat, product = 'civillight', output = 'json') {
+    try {
+      const url = `${this.#domaine}?lon=${lon}&lat=${lat}&product=${product}&output=${output}`;
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`Erreur HTTP : ${response.status} - ${response.statusText}`);
+      }
+
+      const json = await response.json();
+
+      if (!json.dataseries || !Array.isArray(json.dataseries)) {
+        throw new Error("Format de réponse invalide");
+      }
+
+      return json.dataseries.map(item => new WeatherDataCivillight(
+        item.date,
+        item.weather,
+        item.temp2m,
+        item.wind10m_max
+      ));
+    } catch (error) {
+      console.error("Erreur de chargement des données :", error);
+      return null; // Retourne `null` en cas d'erreur
+    }
   }
+
 
   /**
    * Récupère les données spécifiques avec des options avancées.
