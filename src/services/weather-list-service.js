@@ -35,11 +35,11 @@ export class WeatherListService {
         <div class="wrapper">
             <div class="top">
                 <h3 class="date">${item.date.toISOString().split('T')[0]}</h3>
-                <img src="./assets/images/ishower.png" alt="${item.weather}">
+                <img src="./assets/images/${item.weather}.png" alt="${item.weather}">
             </div>
             <div class="bottom">
                 <p class="weather-description">
-                    ${item.weather}
+                    ${item.weather.toUpperCase()}
                 </p>
                 <p class="weather-description">
                     <span class="temp-high">Max: ${item.temp2m.max} °C</span>
